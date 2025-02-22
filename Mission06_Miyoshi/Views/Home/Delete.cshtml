@@ -2,12 +2,16 @@
 @model Movies
 
 <h2>Confirm Deletion</h2>
+<!-- Show the title of the movie being deleted -->
 <h3>@Model.Title</h3>
 
+<!-- Form to submit the delete request -->
 <form method="post">
-    
+
+    <!-- Hidden input to store the MovieId so it is sent with the request -->
     <input type="hidden" asp-for="MovieId"/>
     
     <button type="submit">Delete</button>
+    <!-- Button to cancel deletion and return to the Movie List page -->
     <a class="btn btn-info" asp-controller="Home" asp-action="MovieList">Cancel</a>
 </form>

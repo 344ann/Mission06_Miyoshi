@@ -2,11 +2,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Mission06_Miyoshi.Models;
 
+// DbContext represents a session with the database
 public class MovieContext : DbContext
 {
+    // Constructor that takes database options and passes them to the base DbContext
     public MovieContext(DbContextOptions<MovieContext> options) : base(options) {}
     
+    // Define a table for Movies
     public DbSet<Movies> Movies { get; set; }
+    // Define a table for Categories
     public DbSet<Category> Categories { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) //check if the data is in there and seed data if not

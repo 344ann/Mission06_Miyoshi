@@ -25,7 +25,7 @@ public class Movies //holding the information for one movie (singular)
     
     [ForeignKey("CategoryId")]
     public int? CategoryId { get; set; } // ? to handle null values
-    public Category? Category { get; set; }
+    public Category? Category { get; set; } // Navigation property for EF Core to establish a relationship with the Category table
     
     [Required]
     public string Title { get; set; }

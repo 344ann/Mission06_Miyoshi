@@ -30,18 +30,19 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Movies()
     {
+        // Fetches the categories from the database and stores them in ViewBag for dropdown selection
         ViewBag.Categories = _context.Categories
             .OrderBy(x => x.CategoryId)
             .ToList();
         
-        return View(new Movies());
+        return View(new Movies()); // Returns an empty movie object for the form
     }
 
     // HTTP POST: Receives movie data from the form and saves it to the database
     [HttpPost]
     public IActionResult Movies(Movies response)
     {
-        if (ModelState.IsValid)
+        if (ModelState.IsValid) // Checks if form data is valid based on model rules
         {
             _context.Movies.Add(response); //Add record to the database
             _context.SaveChanges(); // Saves changes to the database
@@ -49,20 +50,22 @@ public class HomeController : Controller
 
         }
         else //Invalid data
-        {
+        { 
+            // Reloads the categories to repopulate the dropdown list
             ViewBag.Categories = _context.Categories
                 .OrderBy(x => x.CategoryId)
                 .ToList();
 
-            return RedirectToAction("Movies", response);
+            return RedirectToAction("Movies", response); // Returns the Movies view
         }
     }
 
+    // Retrieves and displays the list of movies
     public IActionResult MovieList()
     {
         //Linq
         var movies = _context.Movies
-            .Include(x => x.Category)
+            .Include(x => x.Category) // Ensures category data is also loaded
             //.Where(x => x.CreeperStalker == false)
             .OrderBy(x => x.Title)
             .ToList();
@@ -70,12 +73,14 @@ public class HomeController : Controller
         return View(movies);
     }
 
+    // HTTP GET: Retrieves the movie to be edited based on its ID
     [HttpGet]
     public IActionResult Edit(int id)
     {
         var recordToEdit = _context.Movies
-            .Single(x => x.MovieId == id);
+            .Single(x => x.MovieId == id); // Finds the specific movie by ID
         
+        // Loads categories for dropdown selection
         ViewBag.Categories = _context.Categories
             .OrderBy(x => x.CategoryId)
             .ToList();
@@ -83,6 +88,7 @@ public class HomeController : Controller
         return View("Movies", recordToEdit);
     }
 
+    // HTTP POST: Updates the movie details in the database
     [HttpPost]
     public IActionResult Edit(Movies updatedInfo)
     {
@@ -91,21 +97,23 @@ public class HomeController : Controller
         return RedirectToAction("MovieList");
     }
 
+    // HTTP GET: Displays a confirmation page before deleting a movie
     [HttpGet]
     public IActionResult Delete(int id)
     {
         var recordToDelete = _context.Movies.Single(x => x.MovieId == id);
         
-        return View(recordToDelete);
+        return View(recordToDelete); // Passes movie data to the delete confirmation page
     }
-
+    
+    // HTTP POST: Deletes the movie from the database
     [HttpPost]
     public IActionResult Delete(Movies deletedInfo)
     {
         _context.Movies.Remove(deletedInfo);
         _context.SaveChanges();
         
-        return RedirectToAction("MovieList");
+        return RedirectToAction("MovieList"); // Redirects back to the movie list
     }
     
 
