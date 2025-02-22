@@ -23,7 +23,7 @@
     {
         <tbody>
             <tr>
-                <td>@x.Category.CategoryName</td>
+                <td>@(x.Category != null ? x.Category.CategoryName : "")</td>
                 <td>@x.Title</td>
                 <td>@x.Year</td>
                 <td>@x.Director</td>

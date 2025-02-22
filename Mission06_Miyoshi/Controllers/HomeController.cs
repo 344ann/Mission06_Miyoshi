@@ -30,13 +30,11 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Movies()
     {
-        Movies newMovie = new Movies();
-        
         ViewBag.Categories = _context.Categories
             .OrderBy(x => x.CategoryId)
             .ToList();
         
-        return View(newMovie);
+        return View(new Movies());
     }
 
     // HTTP POST: Receives movie data from the form and saves it to the database
@@ -45,9 +43,9 @@ public class HomeController : Controller
     {
         if (ModelState.IsValid)
         {
-            _context.Movies.Add(response); //Add record to the datebase
+            _context.Movies.Add(response); //Add record to the database
             _context.SaveChanges(); // Saves changes to the database
-            return View(response); // Returns the Movies view with the submitted data
+            return RedirectToAction("Movies"); // Returns the Movies view
 
         }
         else //Invalid data
@@ -56,7 +54,7 @@ public class HomeController : Controller
                 .OrderBy(x => x.CategoryId)
                 .ToList();
 
-            return View(response);
+            return RedirectToAction("Movies", response);
         }
     }
 
