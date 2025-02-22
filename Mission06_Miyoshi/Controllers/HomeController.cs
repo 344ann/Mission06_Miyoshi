@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Mission06_Miyoshi.Models;
 
 namespace Mission06_Miyoshi.Controllers;
@@ -29,17 +30,90 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Movies()
     {
-        return View();
+        Movies newMovie = new Movies();
+        
+        ViewBag.Categories = _context.Categories
+            .OrderBy(x => x.CategoryId)
+            .ToList();
+        
+        return View(newMovie);
     }
 
     // HTTP POST: Receives movie data from the form and saves it to the database
     [HttpPost]
     public IActionResult Movies(Movies response)
     {
-        _context.Movies.Add(response); //Add record to the datebase
-        _context.SaveChanges(); // Saves changes to the database
-        return View(response); // Returns the Movies view with the submitted data
+        if (ModelState.IsValid)
+        {
+            if (response.Category == null) // Handle optional category
+            {
+                response.Category = null;
+            }
+            _context.Movies.Add(response); //Add record to the datebase
+            _context.SaveChanges(); // Saves changes to the database
+            return View(response); // Returns the Movies view with the submitted data
+
+        }
+        else //Invalid data
+        {
+            ViewBag.Categories = _context.Categories
+                .OrderBy(x => x.CategoryId)
+                .ToList();
+
+            return View(response);
+        }
     }
+
+    public IActionResult MovieList()
+    {
+        //Linq
+        var movies = _context.Movies
+            .Include(x => x.Category)
+            //.Where(x => x.CreeperStalker == false)
+            .OrderBy(x => x.Title)
+            .ToList();
+
+        return View(movies);
+    }
+
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        var recordToEdit = _context.Movies
+            .Single(x => x.MovieId == id);
+        
+        ViewBag.Categories = _context.Categories
+            .OrderBy(x => x.CategoryId)
+            .ToList();
+        
+        return View("Movies", recordToEdit);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(Movies updatedInfo)
+    {
+        _context.Movies.Update(updatedInfo);
+        _context.SaveChanges();
+        return RedirectToAction("MovieList");
+    }
+
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        var recordToDelete = _context.Movies.Single(x => x.MovieId == id);
+        
+        return View(recordToDelete);
+    }
+
+    [HttpPost]
+    public IActionResult Delete(Movies deletedInfo)
+    {
+        _context.Movies.Remove(deletedInfo);
+        _context.SaveChanges();
+        
+        return RedirectToAction("MovieList");
+    }
+    
 
     // Handles error responses and displays an error view
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -9,10 +9,19 @@
 
 <!-- Form for submitting a new movie record -->
 <form method="post">
+    
+    <!-- Hidden MovieID -->
+    <input type="hidden" asp-for="MovieId" />
 
-    <!-- Category field (required) -->
-    <label asp-for="Category">Category: </label>
-    <input asp-for="Category" required/>
+    <!-- Category field (optional) -->
+    <label asp-for="CategoryId">Category: </label>
+    <select asp-for="CategoryId">
+        <option value="">Select a Category</option>
+        @foreach (Category m in ViewBag.Categories)
+        {
+            <option value="@m.CategoryId">@m.CategoryName</option>
+        }
+    </select>
     <br/>
 
     <!-- Title field (required) -->
@@ -22,17 +31,17 @@
 
     <!-- Year field (required) -->
     <label asp-for="Year">Year: </label>
-    <input asp-for="Year" required/>
+    <input asp-for="Year" required min="1888" max="@DateTime.Now.Year"/>
     <br/>
 
-    <!-- Director field (required) -->
+    <!-- Director field (optional) -->
     <label asp-for="Director">Director: </label>
-    <input asp-for="Director" required/>
+    <input asp-for="Director"/>
     <br/>
 
-    <!-- Dropdown menu for Rating (required) -->
+    <!-- Dropdown menu for Rating (optional) -->
     <label asp-for="Rating">Rating: </label>
-    <select asp-for="Rating" required>
+    <select asp-for="Rating">
         <option value="G">G</option>
         <option value="PG">PG</option>
         <option value="PG-13">PG-13</option>
@@ -40,10 +49,10 @@
     </select>
     <br/>
 
-    <!-- Dropdown menu for Edited field (optional, Yes/No) -->
+    <!-- Dropdown menu for Edited field (required) -->
     <label asp-for="Edited">Edited: </label>
-    <select asp-for="Edited">
-        <option value="ture">Yes</option>
+    <select asp-for="Edited" required>
+        <option value="true">Yes</option>
         <option value="false">No</option>
     </select>
     <br/>
@@ -53,6 +62,14 @@
     <input asp-for="LentTo"/>
     <br/>
 
+    <!-- Copied To Plex field (required) -->
+    <label asp-for="CopiedToPlex">Copied To Plex: </label>
+    <select asp-for="CopiedToPlex" required>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+    </select>
+    <br/>
+
     <!-- Notes field (optional, max 25 characters) -->
     <label asp-for="Notes">Notes: </label>
     <input asp-for="Notes" maxlength="25"/>
@@ -60,4 +77,6 @@
 
     <!-- Submit button -->
     <button type="submit">Save the Movie</button>
+    
+    <div asp-validation-summary="All"></div>
 </form>
