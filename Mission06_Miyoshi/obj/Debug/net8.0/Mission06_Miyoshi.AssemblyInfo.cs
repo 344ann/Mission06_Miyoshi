@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Mission06_Miyoshi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82d302abd29e266cbdb2bff7705df35115a237af")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+12956a2a71529585c63186baeb0efcb1fffa4868")]
 [assembly: System.Reflection.AssemblyProductAttribute("Mission06_Miyoshi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Mission06_Miyoshi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

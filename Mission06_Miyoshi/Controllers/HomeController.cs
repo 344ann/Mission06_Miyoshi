@@ -45,10 +45,6 @@ public class HomeController : Controller
     {
         if (ModelState.IsValid)
         {
-            if (response.Category == null) // Handle optional category
-            {
-                response.Category = null;
-            }
             _context.Movies.Add(response); //Add record to the datebase
             _context.SaveChanges(); // Saves changes to the database
             return View(response); // Returns the Movies view with the submitted data
