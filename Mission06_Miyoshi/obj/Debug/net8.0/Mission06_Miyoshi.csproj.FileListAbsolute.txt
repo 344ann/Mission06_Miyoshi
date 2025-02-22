@@ -131,3 +131,4 @@
 /Users/annamiyoshi/RiderProjects/Mission06_Miyoshi/Mission06_Miyoshi/bin/Debug/net8.0/runtimes/win-x64/native/e_sqlite3.dll
 /Users/annamiyoshi/RiderProjects/Mission06_Miyoshi/Mission06_Miyoshi/bin/Debug/net8.0/runtimes/win-x86/native/e_sqlite3.dll
 /Users/annamiyoshi/RiderProjects/Mission06_Miyoshi/Mission06_Miyoshi/obj/Debug/net8.0/Mission0.F75C80B6.Up2Date
+/Users/annamiyoshi/RiderProjects/Mission06_Miyoshi/Mission06_Miyoshi/obj/Debug/net8.0/Mission06_Miyoshi.sourcelink.json

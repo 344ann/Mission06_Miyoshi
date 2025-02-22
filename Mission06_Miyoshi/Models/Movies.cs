@@ -34,7 +34,7 @@ public class Movies
     public bool? Edited { get; set; }
     
     public string? LentTo { get; set; }
-    [Range(0, 25)]
+    [StringLength(25, ErrorMessage = "Notes cannot exceed 25 characters.")]
     public string? Notes { get; set; }
     
 }
